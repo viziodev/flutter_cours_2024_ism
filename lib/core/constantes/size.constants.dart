@@ -1,0 +1,1 @@
+const bbwPadding=20.0;
