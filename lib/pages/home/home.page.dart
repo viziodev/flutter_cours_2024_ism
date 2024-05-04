@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cours_2024_ism/core/constantes/size.constants.dart';
+import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
-import 'package:flutter_cours_2024_ism/pages/home/components/categorie.list.component.component.dart';
+import 'package:flutter_cours_2024_ism/pages/home/components/categorie.list.component.dart';
 import 'package:flutter_cours_2024_ism/pages/home/components/produit.list.component.dart';
 
 class HomePage extends StatelessWidget {
@@ -49,36 +50,21 @@ static String routeName="/home";
      
     ],
   ),
-
        ),
-       body:const Column(
-       mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-         SizedBox(
-         width: double.infinity,
-            child: Text("Categories",style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-            ),
-            ),
+       body:  const SafeArea(
+        child: SingleChildScrollView(
+          padding:  EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+          
+            children: [
+              CategorieList(),
+             // const  SizedBox(height: 2),
+              ProduitList()
+              //ProduitItem(callback:() {}, produit:  Produit(id: 1, libelle: "Sac",prix:1000,photo: "assets/images/glap.png"))
+            ]
           ),
-          //Liste des Catgories
-           CategorieList(),
-
-            SizedBox(
-                    child: Text("Produits",style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                  ),
-                  ),
-                ),
-        
-           ProduitList()
-
-
-        ],)
+        ),
+      ),
 
     );
   }
