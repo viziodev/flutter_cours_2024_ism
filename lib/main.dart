@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
 import 'package:flutter_cours_2024_ism/pages/home/home.page.dart';
+import 'package:flutter_cours_2024_ism/pages/produit_categorie/produit.categorie.page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       initialRoute: "/home",
       routes: {  
         "/home":(context)=> const HomePage(),
-        "/cart":(context)=> const CartPage()
+        "/cart":(context)=> const CartPage(),
+        "/categorie":(context)=> const ProduitCategoriePage()
       },
       home: const HomePage() ,
     );

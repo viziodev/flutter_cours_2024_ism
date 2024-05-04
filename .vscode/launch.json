@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib/pages/produit_categorie/components/produit.list.component.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/pages/produit_categorie/components/produit.list.component.dart"
+        }
+    ]
+}

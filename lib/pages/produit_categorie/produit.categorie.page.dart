@@ -4,20 +4,20 @@ import 'package:flutter_cours_2024_ism/core/services/produit.service.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
 import 'package:flutter_cours_2024_ism/core/components/produit.list.component.dart';
 
-import 'package:flutter_cours_2024_ism/pages/home/components/categorie.list.component.component.dart';
+
+import 'package:flutter_cours_2024_ism/pages/home/home.page.dart';
 
 
 
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-static String routeName="/home";
+class ProduitCategoriePage extends StatelessWidget {
+  const ProduitCategoriePage({super.key});
+static String routeName="/categorie";
   @override
   Widget build(BuildContext context) {
-     Future<List<Produit> >produitsFuture= ProduitService.findAll();
+   Future<List<Produit> >produitsFuture= ProduitService.findAll();
   return Scaffold(
         appBar: AppBar(
-          title: const Text("Home Page"),
+          title: const Text("Produit une Categorie"),
            actions: [
             IconButton(onPressed: (){
                   Navigator.pushNamed(context, CartPage.routeName);
@@ -57,12 +57,12 @@ static String routeName="/home";
   ),
 
        ),
-       body:  Column(
+       body:   Column(
        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-         SizedBox(
+        children:  [
+         const SizedBox(
            width: double.infinity,
-            child: Text("Categories",style: TextStyle(
+            child: Text("Les Produits de la categorie",style: TextStyle(
                fontSize: 20,
                fontWeight: FontWeight.bold,
                 color: Colors.grey
@@ -70,22 +70,9 @@ static String routeName="/home";
             textAlign: TextAlign.start,
             ),
             ),
-          //Liste des Catgories
-              CategorieList(),
-            //CategorieItem(categorie: Categorie(id: 1, libelle: "Sac")),
-            SizedBox(
-                    child: Text("Produits",style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                  ),
-                  ),
-                ),
-        
-          // ProduitItem(produit:Produit(id: 1, libelle: "Sac",prix:1000,photo:""), callback: () {
-         
-      // },)
-            ProduitList(produitsFuture: produitsFuture)
+
+             ProduitList(produitsFuture:produitsFuture),
+
         ],)
 
     );
