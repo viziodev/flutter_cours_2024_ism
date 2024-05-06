@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_cours_2024_ism/core/constantes/colors.constantes.dart';
+import 'package:flutter_cours_2024_ism/core/models/cart.models.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
+import 'package:flutter_cours_2024_ism/core/services/cart.service.dart';
 
 
 class ProduitList extends StatelessWidget {
        Future<List<Produit> >produitsFuture;
+      
+       
        ProduitList({super.key ,required  this.produitsFuture} );
   @override
   Widget build(BuildContext context) {
+     CartService cartService = new CartService();
+  
      return  FutureBuilder<List<Produit> >(
         future:  produitsFuture ,
                   builder:(context, snapshot) {
                        if (snapshot.hasData) {
                            return  SizedBox(
-                              height: 600,
+                              height: MediaQuery.of(context).size.height,
                               child: GridView.count(
                                 crossAxisCount:2 , 
                                 crossAxisSpacing: 4.0,  
@@ -21,7 +28,7 @@ class ProduitList extends StatelessWidget {
                                 children: List.generate(snapshot.data!.length, (index) {  
                                     return Center(  
                                       child: ProduitItem(produit: snapshot.data![index], callback:() {
-                                        
+                                           cartService.addCart( snapshot.data![index]) ; 
                                       },),  
                                     );  
                     }  
@@ -39,7 +46,7 @@ class ProduitList extends StatelessWidget {
 
 class ProduitItem extends StatelessWidget {
      Produit produit;
-   VoidCallback callback;
+    VoidCallback callback;
    ProduitItem({super.key,required this.produit,required this.callback});
 
   @override
@@ -59,9 +66,16 @@ class ProduitItem extends StatelessWidget {
               child:Container(
                 decoration:
                  const BoxDecoration(
-                  color: Colors.amber,
+                 
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
                  ),
+                 child: Image.network(
+                                     //color: Colors.amber,
+                                     produit.photo?? 'https://static.vecteezy.com/system/resources/thumbnails/004/580/539/small_2x/ui-ux-programmer-flat-design-illustration-vector.jpg',
+                                     // height: 220.0,
+                                      width: double.maxFinite,
+                                      fit: BoxFit.cover,
+                                    ),
               ) ,
              ),
           //Espace 
@@ -80,7 +94,11 @@ class ProduitItem extends StatelessWidget {
                style: const TextStyle(fontSize: 14,
                fontWeight: FontWeight.bold,
                ),),
-               const Icon(Icons.shopping_cart_checkout_rounded)
+               
+               GestureDetector(
+                onTap: callback,
+                child: Icon(Icons.shopping_cart_checkout_rounded)
+                )
 
            ],)
         ],)

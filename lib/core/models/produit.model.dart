@@ -9,7 +9,8 @@ class Produit {
      double nouveauPrix;
      bool? promo;
      int qteStock;
-    String? photo;
+      String? photo;
+      int?  qteComd;
   Produit({
     required this.id,
     required this.libelle,
@@ -18,6 +19,7 @@ class Produit {
     this.promo,
     required this.qteStock,
     this.photo,
+    this.qteComd
   });
 
   Produit copyWith({
