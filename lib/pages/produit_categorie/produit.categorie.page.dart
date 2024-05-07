@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cours_2024_ism/core/components/text.component.dart';
+import 'package:flutter_cours_2024_ism/core/models/categorie.models.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
 import 'package:flutter_cours_2024_ism/core/services/produit.service.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
@@ -9,12 +11,31 @@ import 'package:flutter_cours_2024_ism/pages/home/home.page.dart';
 
 
 
-class ProduitCategoriePage extends StatelessWidget {
-  const ProduitCategoriePage({super.key});
+class ProduitCategoriePage extends StatefulWidget {
+  Categorie categorie;
+  ProduitCategoriePage({super.key,required this.categorie});
 static String routeName="/categorie";
+
+  @override
+  State<ProduitCategoriePage> createState() => _ProduitCategoriePageState();
+}
+
+class _ProduitCategoriePageState extends State<ProduitCategoriePage> {
+   Future<List<Produit>>?produitsFuture;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     produitsFuture = ProduitService.findByCategorie(widget.categorie.id);
+     produitsFuture!.then((value) => {
+        //  print(value)
+     });
+  }
   @override
   Widget build(BuildContext context) {
-   Future<List<Produit> >produitsFuture= ProduitService.findAll();
+
+  
+
   return Scaffold(
         appBar: AppBar(
           title: const Text("Produit une Categorie"),
@@ -57,23 +78,17 @@ static String routeName="/categorie";
   ),
 
        ),
-       body:   Column(
-       mainAxisAlignment: MainAxisAlignment.start,
-        children:  [
-         const SizedBox(
-           width: double.infinity,
-            child: Text("Les Produits de la categorie",style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-                color: Colors.grey
-            ),
-            textAlign: TextAlign.start,
-            ),
-            ),
-
-             ProduitList(produitsFuture:produitsFuture),
-
-        ],)
+       body:   SafeArea(
+           child: SingleChildScrollView(
+           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children:  [
+                 headerText(title: "Produits de la categorie ${widget.categorie.libelle}"),
+                 ProduitList(produitsFuture:produitsFuture!),
+           
+            ],),
+         ),
+       )
 
     );
   }

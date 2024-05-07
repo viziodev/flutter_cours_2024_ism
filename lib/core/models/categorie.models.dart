@@ -4,7 +4,7 @@ import 'dart:convert';
 class Categorie {
    int id;
    String libelle;
-  Categorie({
+    Categorie({
     required this.id,
     required this.libelle,
   });

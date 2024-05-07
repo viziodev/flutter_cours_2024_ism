@@ -68,7 +68,11 @@ class _CategorieItemState extends State<CategorieItem> {
   Widget build(BuildContext context) {
     return  GestureDetector(
         onTap: () {
-           Navigator.pushNamed(context,ProduitCategoriePage.routeName);
+          Navigator.pop(context);
+            Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => ProduitCategoriePage(categorie:widget.categorie )),
+            );
         },
         child: Padding(
          padding: const EdgeInsets.all(8.0),

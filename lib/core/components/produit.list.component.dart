@@ -13,7 +13,7 @@ class ProduitList extends StatelessWidget {
                   builder:(context, snapshot) {
                        if (snapshot.hasData) {
                            return  SizedBox(
-                              height: 600,
+                              height: MediaQuery.of(context).size.height,
                               child: GridView.count(
                                 crossAxisCount:2 , 
                                 crossAxisSpacing: 4.0,  
@@ -59,18 +59,31 @@ class ProduitItem extends StatelessWidget {
               child:Container(
                 decoration:
                  const BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
-                 ),
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+                    ),
+                   child: Image.network(produit.photo??"https://static.vecteezy.com/system/resources/thumbnails/004/580/539/small_2x/ui-ux-programmer-flat-design-illustration-vector.jpg",
+                   width:  double.maxFinite,
+                  fit: BoxFit.cover,
+                  ),
               ) ,
              ),
           //Espace 
              const SizedBox(height: 5,),
+             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                Text(produit.libelle,
                maxLines: 2,
-              style: const TextStyle(fontSize: 14,
-              fontWeight: FontWeight.bold,
-           )),
+                 style: const TextStyle(fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                )),
+                Text(produit.categorie.libelle,
+                   style: const TextStyle(fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                )),
+             ],),
+             
           //Nom et Prix
 
            Row(

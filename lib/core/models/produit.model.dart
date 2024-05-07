@@ -1,15 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class Produit {
+import 'package:flutter_cours_2024_ism/core/models/categorie.models.dart';
 
+class Produit {
     int id;
      String libelle;
      double? ancienPrix;
      double nouveauPrix;
      bool? promo;
      int qteStock;
-    String? photo;
+     String? photo;
+     Categorie categorie;
+     int? qteComd; 
+
   Produit({
     required this.id,
     required this.libelle,
@@ -18,7 +22,10 @@ class Produit {
     this.promo,
     required this.qteStock,
     this.photo,
+    required this.categorie,
+    this.qteComd,
   });
+  
 
   Produit copyWith({
     int? id,
@@ -28,6 +35,8 @@ class Produit {
     bool? promo,
     int? qteStock,
     String? photo,
+    Categorie? categorie,
+    int? qteComd,
   }) {
     return Produit(
       id: id ?? this.id,
@@ -37,6 +46,8 @@ class Produit {
       promo: promo ?? this.promo,
       qteStock: qteStock ?? this.qteStock,
       photo: photo ?? this.photo,
+      categorie: categorie ?? this.categorie,
+      qteComd: qteComd ?? this.qteComd,
     );
   }
 
@@ -49,6 +60,8 @@ class Produit {
       'promo': promo,
       'qteStock': qteStock,
       'photo': photo,
+      'categorie': categorie.toMap(),
+      'qteComd': qteComd,
     };
   }
 
@@ -61,6 +74,8 @@ class Produit {
       promo: map['promo'] != null ? map['promo'] as bool : null,
       qteStock: map['qteStock'] as int,
       photo: map['photo'] != null ? map['photo'] as String : null,
+      categorie: Categorie.fromMap(map['categorie'] as Map<String,dynamic>),
+      qteComd: map['qteComd'] != null ? map['qteComd'] as int : null,
     );
   }
 
@@ -70,9 +85,8 @@ class Produit {
 
   @override
   String toString() {
-    return 'Produit(id: $id, libelle: $libelle, ancienPrix: $ancienPrix, nouveauPrix: $nouveauPrix, promo: $promo, qteStock: $qteStock, photo: $photo)';
+    return 'Produit(id: $id, libelle: $libelle, ancienPrix: $ancienPrix, nouveauPrix: $nouveauPrix, promo: $promo, qteStock: $qteStock, photo: $photo, categorie: $categorie, qteComd: $qteComd)';
   }
-
 
   @override
   bool operator ==(covariant Produit other) {
@@ -85,7 +99,9 @@ class Produit {
       other.nouveauPrix == nouveauPrix &&
       other.promo == promo &&
       other.qteStock == qteStock &&
-      other.photo == photo;
+      other.photo == photo &&
+      other.categorie == categorie &&
+      other.qteComd == qteComd;
   }
 
   @override
@@ -96,6 +112,8 @@ class Produit {
       nouveauPrix.hashCode ^
       promo.hashCode ^
       qteStock.hashCode ^
-      photo.hashCode;
+      photo.hashCode ^
+      categorie.hashCode ^
+      qteComd.hashCode;
   }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cours_2024_ism/core/components/text.component.dart';
+import 'package:flutter_cours_2024_ism/core/constantes/size.constants.dart';
+import 'package:flutter_cours_2024_ism/pages/cart/components/cart.component.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -9,11 +12,21 @@ class CartPage extends StatelessWidget {
       appBar:   AppBar(
           title: const Text("Panier"),
            actions: [
-            IconButton(onPressed: (){
-                  Navigator.pushNamed(context, CartPage.routeName);
-            }, icon: const Icon(Icons.shopping_cart,color: Colors.amber,))
+ 
           ],
        ),
+       body: SafeArea(
+        child: 
+        SingleChildScrollView(
+          child: Column(
+             mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+             headerText(title: "Liste des Produits du panier"),
+               const SizedBox(height: bbwPadding,),
+               //CartItem ()
+              const CartList()
+            ],),
+          ),),
     );
   }
 }
