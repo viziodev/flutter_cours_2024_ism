@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_cours_2024_ism/core/constantes/colors.constantes.dart';
-import 'package:flutter_cours_2024_ism/core/models/cart.models.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
-import 'package:flutter_cours_2024_ism/core/services/cart.service.dart';
+import 'package:flutter_cours_2024_ism/core/providers/cart.providers.dart';
+import 'package:provider/provider.dart';
 
 
 class ProduitList extends StatelessWidget {
-       Future<List<Produit> >produitsFuture;
-      
-       
+       Future<List<ProduitCatalogue> >produitsFuture;
        ProduitList({super.key ,required  this.produitsFuture} );
   @override
   Widget build(BuildContext context) {
-     CartService cartService = new CartService();
-  
-     return  FutureBuilder<List<Produit> >(
+     final dataProvider = Provider.of<CartPovider>(context, listen: true);
+     return  FutureBuilder<List<ProduitCatalogue> >(
         future:  produitsFuture ,
                   builder:(context, snapshot) {
                        if (snapshot.hasData) {
@@ -28,7 +24,7 @@ class ProduitList extends StatelessWidget {
                                 children: List.generate(snapshot.data!.length, (index) {  
                                     return Center(  
                                       child: ProduitItem(produit: snapshot.data![index], callback:() {
-                                           cartService.addCart( snapshot.data![index]) ; 
+                                            dataProvider.addCart(snapshot.data![index]);
                                       },),  
                                     );  
                     }  
@@ -45,12 +41,13 @@ class ProduitList extends StatelessWidget {
 }
 
 class ProduitItem extends StatelessWidget {
-     Produit produit;
+     ProduitCatalogue produit;
     VoidCallback callback;
    ProduitItem({super.key,required this.produit,required this.callback});
 
   @override
   Widget build(BuildContext context) {
+     
     return Container(
              width:  170,
              height: 180,
@@ -66,7 +63,6 @@ class ProduitItem extends StatelessWidget {
               child:Container(
                 decoration:
                  const BoxDecoration(
-                 
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
                  ),
                  child: Image.network(
@@ -97,7 +93,7 @@ class ProduitItem extends StatelessWidget {
                
                GestureDetector(
                 onTap: callback,
-                child: Icon(Icons.shopping_cart_checkout_rounded)
+                child: const Icon(Icons.shopping_cart_checkout_rounded,color: Colors.white,)
                 )
 
            ],)

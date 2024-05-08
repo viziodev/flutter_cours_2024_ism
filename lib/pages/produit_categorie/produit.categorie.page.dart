@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_cours_2024_ism/core/components/widget.bar.dart';
+import 'package:flutter_cours_2024_ism/core/models/cart.models.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
 import 'package:flutter_cours_2024_ism/core/services/produit.service.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
@@ -17,16 +18,11 @@ class ProduitCategoriePage extends StatelessWidget {
 static String routeName="/categorie";
   @override
   Widget build(BuildContext context) {
-   Future<List<Produit> >produitsFuture= ProduitService.findAllByCategorie(categorieId);
+     
+
+   Future<List<ProduitCatalogue> >produitsFuture= ProduitService.findAllByCategorie(categorieId);
   return Scaffold(
-        appBar: AppBar(
-          title: const Text("Produit une Categorie"),
-           actions: [
-            IconButton(onPressed: (){
-                  Navigator.pushNamed(context, CartPage.routeName);
-            }, icon: const Icon(Icons.shopping_cart,color: Colors.amber,))
-          ],
-       ),
+        appBar: MyAppBar(title:"Produits Categorie "),
         drawer: Drawer(
         child: ListView(
     // Important: Remove any padding from the ListView.

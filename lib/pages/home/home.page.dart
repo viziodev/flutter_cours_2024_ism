@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cours_2024_ism/core/constantes/colors.constantes.dart';
-import 'package:flutter_cours_2024_ism/core/models/cart.models.dart';
+import 'package:flutter_cours_2024_ism/core/components/widget.bar.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
-import 'package:flutter_cours_2024_ism/core/services/cart.service.dart';
 import 'package:flutter_cours_2024_ism/core/services/produit.service.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
 import 'package:flutter_cours_2024_ism/core/components/produit.list.component.dart';
-
 import 'package:flutter_cours_2024_ism/pages/home/components/categorie.list.component.component.dart';
-import 'package:badges/badges.dart' as badges;
+
 
 
 
@@ -17,40 +14,9 @@ class HomePage extends StatelessWidget {
 static String routeName="/home";
   @override
   Widget build(BuildContext context) {
-     Future<List<Produit> >produitsFuture= ProduitService.findAll();
-     CartService cartService = new CartService();
-       Cart? cart=cartService.cart;
+     Future<List<ProduitCatalogue> >produitsFuture= ProduitService.findAll();
   return Scaffold(
-        appBar: AppBar(
-          title: const Text("Home Page"),
-           actions: [
-            
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: badges.Badge(
-                badgeContent: Text(
-                  "${cart.products!.length}",
-                  style: TextStyle(color: Colors.white),
-                ),
-                  badgeStyle: badges.BadgeStyle(
-                  badgeColor: Colors.red,
-                  padding: const EdgeInsets.all(6.0),
-                  borderRadius: BorderRadius.circular(4),
-                 ),
-                 child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/cart");
-                  },
-                  child: Icon(
-                    Icons.shopping_cart,
-                    size: 30,
-                    color: bbwPrimaryColor,
-                  ),
-                ),
-              ),
-            )
-          ],
-       ),
+        appBar: MyAppBar(title: "Home Page",) ,
         drawer: Drawer(
         child: ListView(
     // Important: Remove any padding from the ListView.

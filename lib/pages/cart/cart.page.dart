@@ -1,49 +1,37 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_cours_2024_ism/core/models/cart.models.dart';
-import 'package:flutter_cours_2024_ism/core/services/cart.service.dart';
+import 'package:flutter_cours_2024_ism/core/components/widget.bar.dart';
+import 'package:flutter_cours_2024_ism/core/constantes/colors.constantes.dart';
+import 'package:flutter_cours_2024_ism/core/models/client.model.dart';
+import 'package:flutter_cours_2024_ism/core/providers/cart.providers.dart';
+import 'package:flutter_cours_2024_ism/core/repositories/produit.repository.dart';
+import 'package:flutter_cours_2024_ism/pages/cart/cart_bottom.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
   static String routeName="/cart";
   @override
   Widget build(BuildContext context) {
-      CartService cartService = new CartService();
-       Cart? cart=cartService.cart;
+    final ProduitRepository produitRepository=ProduitRepository();
+   final dataProvider = Provider.of<CartPovider>(context, listen: true);
     return Scaffold(
-      appBar:   AppBar(
-          title: const Text("Panier"),
-           actions: [
-            IconButton(onPressed: (){
-                  Navigator.pushNamed(context, CartPage.routeName);
-            }, icon: const Icon(Icons.shopping_cart,color: Colors.amber,))
-          ],
-       ),
+      appBar:  MyAppBar(title: "Produits du Panier",),
        body:  SafeArea(
          child:  SingleChildScrollView(
-           child:  Column(children: [
-            SizedBox(
-                    height: 16.0,
+           child:  Column(
+            children: [
+           
+            const SizedBox(
+                    height: 20.0,
                   ),
-                  Text(
-                    "Liste des Produits",
-                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      letterSpacing: 1,
-                      fontWeight: FontWeight.bold,
-                    ), 
-                  ),
-             
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-            for (int i = 0; i <cart.products!.length; i++)
+            for (int i = 0; i <dataProvider.cart.articlesPanier.length; i++)
                   SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Container(
                         margin: const EdgeInsets.all(2),
-                        height: 110,
+                        height: 140,
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(
@@ -53,8 +41,7 @@ class CartPage extends StatelessWidget {
                           ),
                         ),
                         child: Row(
-                          children: [
-                                    
+                          children: [    
                             SizedBox(
                               height: double.infinity,
                               width: 110,
@@ -64,7 +51,7 @@ class CartPage extends StatelessWidget {
                                   bottomLeft: Radius.circular(12.0),
                                 ),
                                 child: Image.network(
-                                 cart.products![i].photo!,
+                                 dataProvider.cart.articlesPanier[i].photo!,
                                   height: 220.0,
                                   width: double.maxFinite,
                                   fit: BoxFit.cover,
@@ -74,58 +61,128 @@ class CartPage extends StatelessWidget {
                             const SizedBox(
                               width: 10,
                             ),
-                            Padding(
+                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 30, horizontal: 2),
+                                  vertical: 10, horizontal: 2),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Analyst Course',
-                                     style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                    dataProvider.cart.articlesPanier[i].libelle,
+                                     style: const TextStyle(
+                                          color: bbwPrimaryColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          
                                         ), 
                                   ),
-                                  const Spacer(),
+                                  const SizedBox(height: 10,),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        "Kiyoko Shimizu",
-                                       style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                        ), 
+                                 
+                                      RichText(
+                                        text:  TextSpan(
+                                          text: "Prix :  ",
+                                           style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ), 
+                                          children: [           
+                                          TextSpan(text: "${dataProvider.cart.articlesPanier[i].prix} CFA",
+                                             style: const TextStyle(
+                                             color: bbwPrimaryColor,
+                                             fontSize: 15,
+                                             fontWeight: FontWeight.bold,),
+                                          
+                                            )
+                                        
+                                          ]
+                                        ),
+                                        
                                       ),
                                       const SizedBox(
                                         width: 20.0,
                                       ),
-                                      Text(
-                                        "16 Video",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                        ), 
+                                  
+                                      RichText(
+                                        text:  TextSpan(
+                                          text: "Qte :  ",
+                                           style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ), 
+                                          children: [           
+                                          TextSpan(text: "${dataProvider.cart.articlesPanier[i].quantite} ",
+                                             style: const TextStyle(
+                                             color: bbwPrimaryColor,
+                                             fontSize: 15,
+                                             fontWeight: FontWeight.bold,),
+                                          
+                                            )
+                                        
+                                          ]
+                                        ),
+                                        
                                       ),
+                                      
+                                    ],
+                                  ),
+                                   const SizedBox(height: 15,),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                 
+                                      RichText(
+                                        text:  TextSpan(
+                                          text: "Montant :  ",
+                                           style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ), 
+                                          children: [           
+                                          TextSpan(text: "${dataProvider.cart.articlesPanier[i].montant} CFA",
+                                             style: const TextStyle(
+                                             color: bbwPrimaryColor,
+                                             fontSize: 20,
+                                             fontWeight: FontWeight.bold,),
+                                          
+                                            )
+                                        
+                                          ]
+                                        ),
+                                        
+                                      ),
+                                      const SizedBox(
+                                        width: 20.0,
+                                      ),
+                                  
+                                      
+                                      
                                     ],
                                   ),
                                 ],
                               ),
                             ),
-                      
-                      
+                    
                           ],
                         ),
                       ),
                     ),
                   ),
-           ],)
+              
+           ],
+           )
            )),
+           bottomNavigationBar:   CartBottom(total:dataProvider.cart.total,savePanier:() {
+                  dataProvider.cart.client=ClientModel(id: 2,nomComplet: "",telephone: "");
+                  produitRepository.add(dataProvider.cart);
+           }, ), 
     );
   }
 }

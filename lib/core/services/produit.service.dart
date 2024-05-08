@@ -9,11 +9,11 @@ enum UriArticle {
 }
 class ProduitService {
    static ProduitRepository produitRepository=ProduitRepository();
-    static Future<List<Produit>>  findAll() async{
+    static Future<List<ProduitCatalogue>>  findAll() async{
       return  await produitRepository.findAll();
    }
 
-   static Future<List<Produit>>  findAllByCategorie(int categorieId) async{
+   static Future<List<ProduitCatalogue>>  findAllByCategorie(int categorieId) async{
          var path="${UriArticle.byCategorie.value}/$categorieId";
          
           return  await produitRepository.findAll(uri:path );
