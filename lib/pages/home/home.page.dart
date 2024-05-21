@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cours_2024_ism/core/components/appbar.component.dart';
 import 'package:flutter_cours_2024_ism/core/components/text.component.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
 import 'package:flutter_cours_2024_ism/core/services/produit.service.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
 import 'package:flutter_cours_2024_ism/core/components/produit.list.component.dart';
 
 import 'package:flutter_cours_2024_ism/pages/home/components/categorie.list.component.component.dart';
-import 'package:badges/badges.dart' as badges;
+
 
 
 
@@ -17,32 +18,7 @@ static String routeName="/home";
   Widget build(BuildContext context) {
      Future<List<Produit> >produitsFuture= ProduitService.findAll();
   return Scaffold(
-        appBar: AppBar(
-          title: const Text("Home Page"),
-           actions: [
-           Padding(
-             padding: const EdgeInsets.only(right: 20.0),
-             child: badges.Badge(
-                       position: badges.BadgePosition.topEnd(top: 0, end: 3),
-                        badgeAnimation: badges.BadgeAnimation.slide(
-                       // disappearanceFadeAnimationDuration: Duration(milliseconds: 200),
-                       // curve: Curves.easeInCubic,
-                       ),
-                     badgeStyle: badges.BadgeStyle(
-                          badgeColor: Colors.red,
-                       ),
-                       badgeContent: Text(
-                       "1",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                       child: IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, CartPage.routeName);
-                        }),
-                 ),
-           )
-          ],
-       ),
+        appBar: BbwAppBar(title: "Home Page",) ,
         drawer: Drawer(
         child: ListView(
     // Important: Remove any padding from the ListView.
@@ -80,8 +56,8 @@ static String routeName="/home";
            child: Column(
            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-                 headerText(title: "Liste des Categories"),
-                  const CategorieList(),
+                
+                 const CategorieList(),
                  headerText(title: "Catalogue de Produit",color: Colors.black),
                   ProduitList(produitsFuture: produitsFuture)
             ],),

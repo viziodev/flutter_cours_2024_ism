@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_cours_2024_ism/core/constantes/api.constante.dart';
+import 'package:flutter_cours_2024_ism/core/models/cart.model.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
 
 class ProduitRepository  {
@@ -20,4 +21,21 @@ class ProduitRepository  {
            }
        
     }
+
+     Future<void> save(Cart cart) async{
+
+          var path="$apiUrl/commandes";
+          dio.post(path,
+          data: cart.toJson(),
+          options:Options(
+            followRedirects:false,
+            validateStatus:(status) {
+                return status!<500;
+            },
+            headers: {
+              Headers.contentTypeHeader:"application/json"
+            }
+          ) 
+          );
+     }
 }

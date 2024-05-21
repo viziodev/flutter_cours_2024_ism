@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cours_2024_ism/core/providers/cart.providers.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
 import 'package:flutter_cours_2024_ism/pages/home/home.page.dart';
-import 'package:flutter_cours_2024_ism/pages/produit_categorie/produit.categorie.page.dart';
-
+import 'package:provider/provider.dart';
 void main() {
-  runApp(const MyApp());
+
+  runApp( 
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: const MyApp(),
+    ),);
 }
 
 class MyApp extends StatelessWidget {

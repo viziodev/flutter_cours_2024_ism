@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cours_2024_ism/core/components/appbar.component.dart';
 import 'package:flutter_cours_2024_ism/core/components/text.component.dart';
 import 'package:flutter_cours_2024_ism/core/models/categorie.models.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
@@ -37,14 +38,7 @@ class _ProduitCategoriePageState extends State<ProduitCategoriePage> {
   
 
   return Scaffold(
-        appBar: AppBar(
-          title: const Text("Produit une Categorie"),
-           actions: [
-            IconButton(onPressed: (){
-                  Navigator.pushNamed(context, CartPage.routeName);
-            }, icon: const Icon(Icons.shopping_cart,color: Colors.amber,))
-          ],
-       ),
+        appBar:  BbwAppBar(title: "Produit de  ${widget.categorie.libelle}",),
         drawer: Drawer(
         child: ListView(
     // Important: Remove any padding from the ListView.
@@ -83,7 +77,7 @@ class _ProduitCategoriePageState extends State<ProduitCategoriePage> {
            child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children:  [
-                 headerText(title: "Produits de la categorie ${widget.categorie.libelle}"),
+                 const SizedBox(height: 20,),
                  ProduitList(produitsFuture:produitsFuture!),
            
             ],),

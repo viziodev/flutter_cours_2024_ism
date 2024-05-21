@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_cours_2024_ism/core/constantes/colors.constantes.dart';
 import 'package:flutter_cours_2024_ism/core/models/produit.model.dart';
+import 'package:flutter_cours_2024_ism/core/providers/cart.providers.dart';
+import 'package:provider/provider.dart';
 
 
 class ProduitList extends StatelessWidget {
@@ -8,6 +11,7 @@ class ProduitList extends StatelessWidget {
        ProduitList({super.key ,required  this.produitsFuture} );
   @override
   Widget build(BuildContext context) {
+        final cartProvider=Provider.of<CartProvider>(context,listen: true);
      return  FutureBuilder<List<Produit> >(
         future:  produitsFuture ,
                   builder:(context, snapshot) {
@@ -21,7 +25,8 @@ class ProduitList extends StatelessWidget {
                                 children: List.generate(snapshot.data!.length, (index) {  
                                     return Center(  
                                       child: ProduitItem(produit: snapshot.data![index], callback:() {
-                                        
+                                        print("ok");
+                                           cartProvider.addCart(snapshot.data![index]);
                                       },),  
                                     );  
                     }  
@@ -39,7 +44,7 @@ class ProduitList extends StatelessWidget {
 
 class ProduitItem extends StatelessWidget {
      Produit produit;
-   VoidCallback callback;
+     VoidCallback callback;
    ProduitItem({super.key,required this.produit,required this.callback});
 
   @override
@@ -93,7 +98,9 @@ class ProduitItem extends StatelessWidget {
                style: const TextStyle(fontSize: 14,
                fontWeight: FontWeight.bold,
                ),),
-               const Icon(Icons.shopping_cart_checkout_rounded)
+               GestureDetector(
+                onTap:() => callback(),
+                child: const Icon(Icons.shopping_cart_checkout_rounded,color: Colors.white,))
 
            ],)
         ],)
