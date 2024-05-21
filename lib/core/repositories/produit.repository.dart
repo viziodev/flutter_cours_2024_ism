@@ -10,7 +10,6 @@ class ProduitRepository  {
    static  Dio dio=Dio();
     Future<List<ProduitCatalogue>> findAll({String uri=''}) async{ 
            var path=url+uri;
-           print(path);
           final response= await dio.get(path);
           if (response.statusCode==200) {
               List<dynamic> datas=response.data["results"];

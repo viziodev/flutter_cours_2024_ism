@@ -15,7 +15,6 @@ class ProduitService {
 
    static Future<List<ProduitCatalogue>>  findAllByCategorie(int categorieId) async{
          var path="${UriArticle.byCategorie.value}/$categorieId";
-         
           return  await produitRepository.findAll(uri:path );
    }
 }

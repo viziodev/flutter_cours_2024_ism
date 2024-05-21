@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cours_2024_ism/core/providers/cart.providers.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart.page.dart';
 import 'package:flutter_cours_2024_ism/pages/home/home.page.dart';
+import 'package:flutter_cours_2024_ism/pages/login/login.page.dart';
 import 'package:flutter_cours_2024_ism/pages/produit_categorie/produit.categorie.page.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
       routes: {  
         "/home":(context)=> const HomePage(),
         "/cart":(context)=> const CartPage(),
-        "/categorie":(context)=>  ProduitCategoriePage(categorieId: 1)
+        "/categorie":(context)=>  ProduitCategoriePage(categorieId: 1),
+        "/loginOrRegister":(context)=> const LoginOrRegisterPage(),
       },
       home: const HomePage() ,
     );

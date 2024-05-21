@@ -5,7 +5,9 @@ import 'package:flutter_cours_2024_ism/core/constantes/colors.constantes.dart';
 import 'package:flutter_cours_2024_ism/core/models/client.model.dart';
 import 'package:flutter_cours_2024_ism/core/providers/cart.providers.dart';
 import 'package:flutter_cours_2024_ism/core/repositories/produit.repository.dart';
+import 'package:flutter_cours_2024_ism/core/services/login_service.dart';
 import 'package:flutter_cours_2024_ism/pages/cart/cart_bottom.dart';
+import 'package:flutter_cours_2024_ism/pages/login/login.page.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -180,8 +182,15 @@ class CartPage extends StatelessWidget {
            )
            )),
            bottomNavigationBar:   CartBottom(total:dataProvider.cart.total,savePanier:() {
-                  dataProvider.cart.client=ClientModel(id: 2,nomComplet: "",telephone: "");
+              if (LoginService.user!=null)  {
+               dataProvider.cart.client=ClientModel(id: LoginService.user!.id,nomComplet: "",telephone: "");
                   produitRepository.add(dataProvider.cart);
+                  dataProvider.clearCart();
+             }else{
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, LoginOrRegisterPage.routeName);
+             }
+                 
            }, ), 
     );
   }
